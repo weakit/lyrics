@@ -7,13 +7,13 @@ import sys
 import stagger
 import stagger.id3 as id3
 
-# TODO optional aid
+# TODO remove dependency
 import acoustID
-acoust = acoustID.lookup(acoustID.M101)
-artist = acoust[0]
-title = acoust[0]
 
-api = '_mqTIAzC6cYLt4QNA4fRO6yLrpnTqPZf2jW5zudjB5-QuczjTj82iK6VNP33SxlZ'
+artist = ' '
+title = ' '
+
+api = 'Genius API'
 base = 'https://genius.com/'
 Fin = False
 dots = acoustID.animation
