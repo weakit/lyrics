@@ -23,10 +23,7 @@ def animate():
 
 
 base = "https://api.acoustid.org/v2/lookup"
-client = 'bZoX2TyccH'
-# TODO Clean Vars
-M101 = os.path.join("C:/", "Users", "Administrator", "Music", "Maroon 5 - Red Pill Blues (Deluxe) (2017)", "102.mp3")
-# V102 = os.path.join("C:/", "Users", "Administrator", "Music", "Maroon 5 - Red Pill Blues (Deluxe) (2017)", "102.mp3")
+client = 'AcoustID API Key'
 
 
 def Exit(reason):
@@ -56,7 +53,7 @@ def lookup(file):
     lookup_id = base + "?client=" + client + '&duration=' + fingerprint[0] + '&fingerprint=' + fingerprint[1]
     raw_id = requests.get(lookup_id)
     if not raw_id.json()["status"] == 'ok':
-        Exit(str("Acoust ID Error: " + raw_id.json()["status"]))
+        Exit(str("Acoust ID Error: status " + raw_id.json()["status"]))
     if len(raw_id.json()['results']) == 0:
         Exit("No matches found.")
     acoust_id = raw_id.json()["results"][0]["id"]
@@ -64,9 +61,9 @@ def lookup(file):
     lookup_song = base + "?client=" + client + '&meta=recordings&trackid=' + acoust_id
     raw_song = requests.get(lookup_song)
     title = raw_song.json()['results'][0]['recordings'][0]['title']
-    mbiz = raw_song.json()['results'][0]['recordings'][0]['id']
+    mbz = raw_song.json()['results'][0]['recordings'][0]['id']
     artist = raw_song.json()['results'][0]['recordings'][0]['artists'][0]['name']
-    return [artist, title, mbiz, score]
+    return [artist, title, mbz, score]
 
 
 if not len(sys.argv) == 1:
