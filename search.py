@@ -2,7 +2,7 @@ import requests
 
 api_key = ''  # Genius API Key
 base = 'https://genius.com/'
-number = 4
+number = 4  # Number of Search Results
 
 
 def search(query):
