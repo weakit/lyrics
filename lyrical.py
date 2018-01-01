@@ -1,22 +1,11 @@
-import requests
-from bs4 import BeautifulSoup
-import threading
 import itertools
 import time
 import sys
-import stagger
-import stagger.id3 as id3
-
-# TODO remove dependency
+import threading
 import acoustID
-
-artist = ' '
-title = ' '
-
-api = 'Genius API'
-base = 'https://genius.com/'
-Fin = False
+import search
 dots = acoustID.animation
+Fin = False
 
 
 def animation():
@@ -31,39 +20,38 @@ def animation():
 t = threading.Thread(target=animation)
 t.start()
 
+import stagger
+import stagger.id3 as id3
+import requests
+from bs4 import BeautifulSoup
+
+artist = ''
+title = ''
+
+base = 'https://genius.com/'
+
 # need ta figure out how regex works TODO Regex
 genius = base+(artist+' '+title+' lyrics').replace(' ', '-').replace("'", '').replace('.', '')
 
 
-# Haven't found a better way.
 def magic(url):
     while True:
         try:
             raw = requests.get(url)
             soup = BeautifulSoup(raw.content, 'html.parser')
-            lyrics = soup.find('div', {'class': 'lyrics'}).get_text()
-            return lyrics
-        except Exception as ex:
-            if api == '':
-                acoustID.Exit('No Hits.\n'+str(ex))
-            else:
-                global title, artist
-                print('Is the title ' + title + ' and artist ' + artist + ' correct for')
-                choice = input('(Y/N)').upper()  # TODO path
-                if choice == 'N':
-                    artist = input('Enter the Correct Artist:')
-                    title = input('Enter the Correct Song Title')
-                elif not choice == 'Y':
-                    acoustID.Exit('Wrong Choice Mate.')
-                search = "https://api.genius.com/search?q=" + artist + ' ' + title
-                headers = {'Authorization': 'Bearer ' + api}
-                results = requests.get(search, headers=headers)
-                return magic(base + results.json()['response']['hits'][0]['result']['path'])
+            linguistics = soup.find('div', {'class': 'lyrics'}).get_text()
+            return linguistics
+        except AttributeError:
+            global Fin
+            Fin = True
+            sys.stdout.write('\r')
+            return magic(search.handle(search.search(artist + ' ' + title)))
 
 
+lyrics = magic(genius)
 Fin = True
 sys.stdout.write('\r' + ' ' * 15 + '\r')
-print(magic(genius))
-print(genius)
+print(lyrics)
+exit(489)
 
 # TODO Command-line Support
