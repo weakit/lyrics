@@ -65,7 +65,7 @@ def lookup(file):
     artist = raw_song.json()['results'][0]['recordings'][0]['artists'][0]['name']
     return [artist, title, mbz, score]
 
-
+"""
 if not len(sys.argv) == 1:
     if str(sys.argv[1]) == '-h' or str(sys.argv[1]) == '--help':
         print("AcoustID Wrapper\nusage: acoustID.py file\n\nIdentifies the Title and Artist of <file> using AcoustID")
@@ -80,3 +80,4 @@ if not len(sys.argv) == 1:
         print("https://www.musicbrainz.org/recording/"+details[2]+"\nPowered by AcoustID - https://acoustid.org/")
     else:
         print('File not found: '+sys.argv[1])
+"""
