@@ -6,4 +6,4 @@ Requires
 * [Chromaprint](https://acoustid.org/chromaprint)
 * [stagger](https://github.com/staggerpkg/stagger)
 * BeautifulSoup 4
-* and requests.
+* requests
