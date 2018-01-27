@@ -11,6 +11,7 @@ cmd = False
 
 animation = ['.   ', '..  ', '... ', ' .. ', '  . ']
 
+
 def animate():
     for an in itertools.cycle(animation):
         if done:
@@ -22,9 +23,6 @@ def animate():
 
 base = "https://api.acoustid.org/v2/lookup"
 client = 'bZoX2TyccH'  # AcoustID API Key
-# TODO Clean Vars
-M101 = os.path.join("C:/", "Users", "Administrator", "Music", "Maroon 5 - Red Pill Blues (Deluxe) (2017)", "102.mp3")
-# V102 = os.path.join("C:/", "Users", "Administrator", "Music", "Maroon 5 - Red Pill Blues (Deluxe) (2017)", "102.mp3")
 
 
 def Exit(reason):
@@ -34,8 +32,11 @@ def Exit(reason):
 
 def getprint(media):
     global cmd
-    finger = subprocess.run(['fpcalc', media], stdout=subprocess.PIPE)
-    out = finger.stdout.decode('utf-8').split('\r\n')
+    try:
+        finger = subprocess.run(['fpcalc', media], stdout=subprocess.PIPE)
+        out = finger.stdout.decode('utf-8').split('\r\n')
+    except FileNotFoundError:
+        return None
     if out[0:5] == 'ERROR':
         if cmd:
             Exit(str('fpcalc error: '+out.split(': ')[1]))
@@ -47,7 +48,6 @@ def getprint(media):
 
 
 def lookup(file):
-    # check for an internet connection
     global cmd
     while True:
         try:
@@ -96,8 +96,10 @@ if __name__ == '__main__':
             details = lookup(sys.argv[1])
             done = True
             sys.stdout.write('\r' + ' ' * 15 + '\r')
+            if str(details).upper()[:5] == 'ERROR':
+                Exit('fpcalc not found.')
             print("'" + details[1] + "' by " + details[0])
             print(
-                "https://www.musicbrainz.org/recording/" + details[2] + "\nPowered by AcoustID - https://acoustid.org/")
+                "https://www.musicbrainz.org/recording/" + details[2])
         else:
             print('File not found: ' + sys.argv[1])
