@@ -96,7 +96,7 @@ def read(file):
 def get(file):
     try:
         import acoustID
-    except ModuleNotFoundError:
+    except ModuleNotFound:
         return read(file)
     global prefix
     prefix = 'Matching with AcoustID  '
