@@ -15,8 +15,9 @@ To use the script, download `lyrical.py` and point it towards an mp3 file.
 ~~~~
 lyrical.py music.mp3
 ~~~~
+## AcoustID Identification
 
-If you have a bunch of mp3s with incorrect information or have feature artists in the artist tag, the script (mostly) fails to find the lyrics.
+If you have a bunch of mp3s with incorrect information or have feature artists in the artist/title tag, the script will (mostly) fail to find the lyrics.
 To fix this, the script also supports identifing music via [acoustID](https://acoustid.org).
 
 To use acoustID, place `acoustID.py` alongside the script.
